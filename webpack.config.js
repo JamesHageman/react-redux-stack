@@ -14,6 +14,9 @@ module.exports = {
   resolveLoader: {
     root: path.join(__dirname, 'node_modules')
   },
+  resolve: {
+    root: path.join(__dirname, 'src')
+  },
   module: {
     preLoaders: [
       {

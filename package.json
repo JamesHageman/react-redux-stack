@@ -4,14 +4,20 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest src/",
     "start": "webpack-dev-server"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
+    "testFileExtensions": ["es6", "js"],
+    "moduleFileExtensions": ["js", "json", "es6"]
   },
   "author": "James Hageman",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.2.1",
     "babel-eslint": "^4.1.5",
+    "babel-jest": "^6.0.1",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
@@ -21,6 +27,8 @@
     "eslint-loader": "^1.1.1",
     "eslint-plugin-react": "^3.10.0",
     "file-loader": "^0.8.4",
+    "jest-cli": "^0.8.0",
+    "jest-webpack-alias": "^2.0.0",
     "webpack": "^1.12.6",
     "webpack-dev-server": "^1.12.1"
   },

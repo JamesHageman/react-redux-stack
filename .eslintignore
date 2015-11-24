@@ -1,1 +1,3 @@
 node_modules
+jest
+webpack.config.js

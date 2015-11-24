@@ -12,11 +12,17 @@ class App extends Component {
   }
 
   handleTodoClick(id) {
-    this.props.dispatch(toggleTodo(id));
+    this.props.dispatch(toggleTodo({
+      todoId: id
+    }));
   }
 
   handleNewTodo(todo) {
-    this.props.dispatch(addTodo(todo.text));
+    this.props.dispatch(addTodo({
+      text: todo.text,
+      todoId: Date.now()
+    }));
+
     this.props.dispatch(reset('todo'));
   }
 
