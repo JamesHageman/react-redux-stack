@@ -9,8 +9,15 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
-    "testFileExtensions": ["es6", "js"],
-    "moduleFileExtensions": ["js", "json", "es6"]
+    "testFileExtensions": [
+      "es6",
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "es6"
+    ]
   },
   "author": "James Hageman",
   "license": "ISC",
@@ -42,6 +49,8 @@
     "react-router": "^1.0.0",
     "redux": "^3.0.4",
     "redux-form": "^3.0.11",
-    "redux-validate-fsa": "^0.1.1"
+    "redux-promise": "^0.5.0",
+    "redux-validate-fsa": "^0.1.1",
+    "whatwg-fetch": "^0.10.1"
   }
 }

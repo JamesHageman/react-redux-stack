@@ -1,6 +1,7 @@
 import rootReducer from './reducers/rootReducer.js';
 import {createStore, applyMiddleware} from 'redux';
-import thunkMiddleware from 'redux-thunk';
+// import thunkMiddleware from 'redux-thunk';
+import promiseMiddleware from 'redux-promise';
 import fsa from 'redux-validate-fsa';
 
 const middleware = [];
@@ -23,7 +24,8 @@ if (process.env.NODE_ENV !== 'production') {
   middleware.push(fsaMiddleware);
 }
 
-middleware.push(thunkMiddleware);
+middleware.push(promiseMiddleware);
+// middleware.push(thunkMiddleware);
 
 const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
 

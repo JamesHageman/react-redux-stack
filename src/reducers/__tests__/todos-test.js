@@ -29,7 +29,6 @@ describe('todos', () => {
       todoId: 1
     }));
 
-    // The inserted todo is the first in state.toArray()
     expect(state.get(1).toJS()).toEqual({
       text: 'foo',
       completed: true
@@ -54,6 +53,5 @@ describe('todos', () => {
         todoId: 2
       }));
     }).toThrow();
-
   });
 });
