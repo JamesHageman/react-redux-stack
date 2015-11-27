@@ -9,20 +9,31 @@ const initialState = Immutable.fromJS({
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
+
   case LOGIN:
     if (action.error) {
       return state
-        .set('loggingIn', false)
-        .set('loginError', action.payload)
-        .set('user', null);
+        .merge({
+          loggingIn: false,
+          loginError: action.error,
+          user: null
+        });
     }
 
-    const {name, email} = action.payload;
+    if (action.payload.res) {
+      const {name, email} = action.payload.res;
+      return state
+        .merge({
+          user: {
+            name,
+            email
+          },
+          loggingIn: false
+        });
+    }
+
     return state
-      .set('user', Immutable.fromJS({
-        name,
-        email
-      }));
+      .set('loggingIn', true);
 
   default:
     return state;

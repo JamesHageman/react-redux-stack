@@ -1,14 +1,32 @@
 import rootReducer from './reducers/rootReducer.js';
 import {createStore, applyMiddleware} from 'redux';
-// import thunkMiddleware from 'redux-thunk';
-import promiseMiddleware from 'redux-promise';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
 import fsa from 'redux-validate-fsa';
+import Immutable from 'immutable';
 
+const logger = createLogger({
+  transformer: (state) => {
+    // Print ImmutableJS objects as plain objects
+    const newState = {};
+    for (const i of Object.keys(state)) {
+      if (Immutable.Iterable.isIterable(state[i])) {
+        newState[i] = state[i].toJS();
+        newState[i].__ACTUALLY_IMMUTABLE__ = true;
+      } else {
+        newState[i] = state[i];
+      }
+    }
+    return newState;
+  }
+});
 const middleware = [];
 
+middleware.push(thunkMiddleware);
+
 /*
-Forces user-defined actions to follow the Flux-Standard-Action rules
-https://github.com/acdlite/flux-standard-action
+fsaMiddleware forces user-defined actions to follow the Flux-Standard-Action
+rules https://github.com/acdlite/flux-standard-action
  */
 const fsaMiddleware = fsa(action => {
   // Redux-Form doesn't follow FSA, but it's still awesome so we make an
@@ -22,10 +40,8 @@ const fsaMiddleware = fsa(action => {
 
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(fsaMiddleware);
+  middleware.push(logger);
 }
-
-middleware.push(promiseMiddleware);
-// middleware.push(thunkMiddleware);
 
 const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
 
