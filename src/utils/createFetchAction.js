@@ -1,8 +1,17 @@
 import invariant from 'invariant';
 
+export const START = 'START';
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
+
 export default function createFetchAction(type, configProvider) {
   invariant(type, '`createFetchAction(type, configProvider)` requires a ' +
             '`type`');
+
+  const meta = {
+    isFetchAction: true
+  };
+
   return (...args) => {
     const {url, params} = configProvider(...args);
     invariant(url, 'The second arg to `createFetchAction()` must return an' +
@@ -18,6 +27,10 @@ export default function createFetchAction(type, configProvider) {
         type,
         payload: {
           req
+        },
+        meta: {
+          ...meta,
+          stage: START
         }
       });
 
@@ -33,6 +46,10 @@ export default function createFetchAction(type, configProvider) {
         payload: {
           req: req,
           res: data
+        },
+        meta: {
+          ...meta,
+          stage: SUCCESS
         }
       }))
       .catch(err => dispatch({
@@ -40,6 +57,10 @@ export default function createFetchAction(type, configProvider) {
         error: err,
         payload: {
           req: req
+        },
+        meta: {
+          ...meta,
+          stage: ERROR
         }
       }));
     };

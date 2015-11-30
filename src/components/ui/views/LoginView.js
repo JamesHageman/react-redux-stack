@@ -4,10 +4,11 @@ import React, {Component} from 'react';
 class LoginView extends Component {
   static propTypes = {
     handleSubmit: React.PropTypes.func.isRequired,
-    fields: React.PropTypes.object.isRequired
+    fields: React.PropTypes.object.isRequired,
+    loading: React.PropTypes.bool.isRequired
   }
   render() {
-    const {fields: {username, password}, handleSubmit} = this.props;
+    const {loading, fields: {username, password}, handleSubmit} = this.props;
     return <div>
       <form onSubmit={handleSubmit}>
         <h3>Login</h3>
@@ -18,6 +19,7 @@ class LoginView extends Component {
           <input type="password" {...password}/>
         </div>
         <button>Login</button>
+        {loading ? ' ...' : ''}
       </form>
     </div>;
   }

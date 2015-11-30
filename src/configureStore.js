@@ -18,7 +18,8 @@ const logger = createLogger({
       }
     }
     return newState;
-  }
+  },
+  duration: true
 });
 const middleware = [];
 

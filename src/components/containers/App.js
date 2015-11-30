@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addTodo, toggleTodo, login} from '../../actions/actions.js';
+import {addTodo, toggleTodo, login, LOGIN} from '../../actions/actions.js';
 import Immutable from 'immutable';
 import TodoView from '../ui/views/TodoView.js';
 import LoginView from '../ui/views/LoginView.js';
@@ -11,6 +11,7 @@ class App extends Component {
     todos: React.PropTypes.instanceOf(Immutable.Map).isRequired,
     user: React.PropTypes.instanceOf(Immutable.Map),
     loggedIn: React.PropTypes.bool.isRequired,
+    loggingIn: React.PropTypes.bool.isRequired,
     dispatch: React.PropTypes.func.isRequired
   }
 
@@ -37,7 +38,7 @@ class App extends Component {
   }
 
   render() {
-    const {todos, loggedIn} = this.props;
+    const {todos, loggedIn, loggingIn} = this.props;
     return <div>
       { loggedIn ?
         <div>
@@ -48,7 +49,7 @@ class App extends Component {
             onNewTodo={this.handleNewTodo.bind(this)}/>
         </div>
         :
-        <LoginView onSubmit={this.handleLogin.bind(this)}/>
+        <LoginView loading={loggingIn} onSubmit={this.handleLogin.bind(this)}/>
       }
     </div>;
   }
@@ -56,9 +57,12 @@ class App extends Component {
 
 export default connect((state) => {
   const user = state.auth.get('user');
+  const loggingIn = state.http.hasIn(['activeRequests', LOGIN]);
+
   return {
     todos: state.todos,
     loggedIn: !!user,
-    user: user
+    user: user,
+    loggingIn: loggingIn
   };
 })(App);
